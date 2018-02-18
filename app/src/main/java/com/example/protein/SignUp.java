@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.protein.Common.Common;
 import com.example.protein.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,7 +18,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class SignUp extends AppCompatActivity {
 
-    MaterialEditText editPhone, editName, editPassword;
+    MaterialEditText editPhone, editName, editPassword, editSecureCode;
     Button btnSignUp;
 
     @Override
@@ -28,6 +29,7 @@ public class SignUp extends AppCompatActivity {
         editName = (MaterialEditText)findViewById( R.id.editName );
         editPhone = (MaterialEditText)findViewById( R.id.editPhone );
         editPassword = (MaterialEditText)findViewById( R.id.editPassword );
+        editSecureCode = (MaterialEditText)findViewById( R.id.editSecureCode );
 
         btnSignUp = (Button)findViewById( R.id.btnSignUp );
 
@@ -39,31 +41,40 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final ProgressDialog mDialog = new ProgressDialog( SignUp.this );
-                mDialog.setMessage( "Please waiting..." );
-                mDialog.show();
+                if (Common.isConnectedToInternet( getBaseContext() )) {
 
-                table_user.addValueEventListener( new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Check if already user phone
-                        if (dataSnapshot.child( editPhone.getText().toString() ).exists()) {
-                            mDialog.dismiss();
-                            Toast.makeText( SignUp.this, "Phone Number already register!", Toast.LENGTH_SHORT ).show();
-                        } else {
-                            mDialog.dismiss();
-                            User user = new User(editName.getText().toString(), editPassword.getText().toString());
-                            table_user.child( editPhone.getText().toString() ).setValue( user );
-                            Toast.makeText( SignUp.this, "Sign up successfully!", Toast.LENGTH_SHORT ).show();
-                            finish();
+                    final ProgressDialog mDialog = new ProgressDialog( SignUp.this );
+                    mDialog.setMessage( "Molimo sačekajte..." );
+                    mDialog.show();
+
+                    table_user.addValueEventListener( new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // Check if already user phone
+                            if (dataSnapshot.child( editPhone.getText().toString() ).exists()) {
+                                mDialog.dismiss();
+                                Toast.makeText( SignUp.this, "Broj telefona već postoji!", Toast.LENGTH_SHORT ).show();
+                            } else {
+                                mDialog.dismiss();
+                                User user = new User( editName.getText().toString(),
+                                        editPassword.getText().toString(),
+                                        editSecureCode.getText().toString());
+                                table_user.child( editPhone.getText().toString() ).setValue( user );
+                                Toast.makeText( SignUp.this, "Uspešno ste se registrovali!", Toast.LENGTH_SHORT ).show();
+                                finish();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                } );
+                        }
+                    } );
+                }
+                else {
+                    Toast.makeText( SignUp.this, "Proverite internet konekciju!", Toast.LENGTH_SHORT ).show();
+                    return;
+                }
 
             }
         } );

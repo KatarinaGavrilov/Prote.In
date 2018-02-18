@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.protein.Common.Common;
 import com.example.protein.Databases.Database;
 import com.example.protein.Model.Food;
 import com.example.protein.Model.Order;
@@ -57,7 +58,8 @@ public class FoodDetail extends AppCompatActivity {
                         currentFood.getName(),
                         numberButton.getNumber(),
                         currentFood.getPrice(),
-                        currentFood.getDiscount()
+                        currentFood.getDiscount(),
+                        currentFood.getImage()
                 ) );
 
                 Toast.makeText( FoodDetail.this, "Dodato u korpu!", Toast.LENGTH_SHORT ).show();
@@ -77,7 +79,13 @@ public class FoodDetail extends AppCompatActivity {
         if (getIntent() != null)
             foodId = getIntent().getStringExtra( "FoodId" );
         if (!foodId.isEmpty()) {
-            getDetailFood(foodId);
+            if (Common.isConnectedToInternet( getBaseContext() )) {
+                getDetailFood(foodId);
+            }
+            else {
+                Toast.makeText( FoodDetail.this, "Proverite internet konekciju!", Toast.LENGTH_SHORT ).show();
+                return;
+            }
         }
     }
 

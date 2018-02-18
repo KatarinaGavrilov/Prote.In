@@ -17,7 +17,7 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editName"
-            android:hint="Name"
+            android:hint="Ime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/black"
@@ -34,7 +34,7 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editPhone"
-            android:hint="Phone"
+            android:hint="Broj telefona"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/black"
@@ -51,7 +51,7 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editPassword"
-            android:hint="Password"
+            android:hint="Lozinka"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/black"
@@ -66,11 +66,28 @@
             app:met_singleLineEllipsis="true"
             />
 
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/editSecureCode"
+            android:hint="Sigurnosni kod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@android:color/black"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="34sp"
+            android:inputType="text"
+            app:met_baseColor="@android:color/black"
+            app:met_floatingLabel="normal"
+            app:met_maxCharacters="11"
+            app:met_primaryColor="@android:color/black"
+            app:met_singleLineEllipsis="true"
+            />
+
     </LinearLayout>
 
     <Button
         android:id="@+id/btnSignUp"
-        android:text="Sign Up"
+        android:text="Registruj se"
         android:textColor="#39796b"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"

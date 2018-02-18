@@ -17,7 +17,7 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editPhone"
-            android:hint="Phone"
+            android:hint="Broj telefona"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/black"
@@ -34,7 +34,7 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editPassword"
-            android:hint="Password"
+            android:hint="Lozinka"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/black"
@@ -49,11 +49,40 @@
             app:met_singleLineEllipsis="true"
             />
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.rey.material.widget.CheckBox
+                android:id="@+id/ckbRemember"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/Material.Drawable.CheckBox"
+                android:text="Zapamti me"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/black"
+                app:cbd_strokeColor="@android:color/black"
+                app:cbd_tickColor="@android:color/white"
+                />
+
+            <TextView
+                android:id="@+id/txtForgotPwd"
+                android:textColor="@android:color/black"
+                android:text="@string/forgot_pwd"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button
         android:id="@+id/btnSignIn"
-        android:text="Sign In"
+        android:text="Login"
         android:textColor="#39796b"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
