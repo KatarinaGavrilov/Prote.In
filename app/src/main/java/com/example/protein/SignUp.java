@@ -1,6 +1,7 @@
 package com.example.protein;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,14 +17,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class SignUp extends AppCompatActivity {
 
     MaterialEditText editPhone, editName, editPassword, editSecureCode;
     Button btnSignUp;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext( CalligraphyContextWrapper.wrap( newBase ) );
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+
+        // Note: add this code before setContentView method
+        CalligraphyConfig.initDefault( new CalligraphyConfig.Builder()
+                .setDefaultFontPath( "fonts/headlock.otf" )
+                .setFontAttrId( R.attr.fontPath )
+                .build());
+
         setContentView( R.layout.activity_sign_up );
 
         editName = (MaterialEditText)findViewById( R.id.editName );

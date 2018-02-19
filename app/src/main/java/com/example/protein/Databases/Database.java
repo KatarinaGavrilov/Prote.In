@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
+import com.example.protein.Common.Common;
 import com.example.protein.Model.Order;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -15,7 +16,9 @@ import java.util.List;
  * Created by gavri on 15/02/2018.
  */
 
+
 public class Database extends SQLiteAssetHelper {
+
     private static final String DB_NAME="ProteinDB.db";
     private static final int DB_VER=1;
     public Database(Context context) {
@@ -26,16 +29,17 @@ public class Database extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] sqlSelect = {"ProductName", "ProductId", "Quantity", "Price", "Discount", "Image"};
+        String[] sqlSelect = {"ID", "ProductName", "ProductId", "Quantity", "Price", "Discount", "Image"};
         String sqlTable = "OrderDetail";
 
         qb.setTables( sqlTable );
-        Cursor c = qb.query( db, sqlSelect, null,null,null,null,null );
+        Cursor c = qb.query( db, sqlSelect, null, null, null, null, null );
 
         final List<Order> result = new ArrayList<>(  );
         if (c.moveToFirst()) {
             do {
-                result.add( new Order( c.getString( c.getColumnIndex( "ProductId" ) ),
+                result.add( new Order(
+                        c.getString( c.getColumnIndex( "ProductId" ) ),
                         c.getString( c.getColumnIndex( "ProductName" ) ),
                         c.getString( c.getColumnIndex( "Quantity" ) ),
                         c.getString( c.getColumnIndex( "Price" ) ),
@@ -61,7 +65,21 @@ public class Database extends SQLiteAssetHelper {
 
     public void cleanCart() {
         SQLiteDatabase db = getReadableDatabase();
-        String query = String.format( "DELETE FROM OrderDetail" );
+        String query = String.format( "DELETE FROM OrderDetail");
         db.execSQL( query );
     }
+
+    public int getCountCart() {
+        int count = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        String query = String.format( "SELECT COUNT(*) FROM OrderDetail");
+        Cursor cursor = db.rawQuery( query, null );
+        if (cursor.moveToFirst()) {
+            do {
+                count = cursor.getInt( 0 );
+            } while (cursor.moveToNext());
+        }
+        return count;
+    }
+
 }

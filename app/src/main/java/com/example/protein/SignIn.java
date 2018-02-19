@@ -2,6 +2,7 @@ package com.example.protein;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,8 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.CheckBox;
 
 import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignIn extends AppCompatActivity {
 
@@ -37,8 +40,20 @@ public class SignIn extends AppCompatActivity {
     DatabaseReference table_user;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext( CalligraphyContextWrapper.wrap( newBase ) );
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+
+        // Note: add this code before setContentView method
+        CalligraphyConfig.initDefault( new CalligraphyConfig.Builder()
+                .setDefaultFontPath( "fonts/headlock.otf" )
+                .setFontAttrId( R.attr.fontPath )
+                .build());
+
         setContentView( R.layout.activity_sign_in );
 
         editPhone = (MaterialEditText)findViewById( R.id.editPhone );

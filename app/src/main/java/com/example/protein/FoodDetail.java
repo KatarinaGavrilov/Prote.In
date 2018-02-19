@@ -1,15 +1,15 @@
 package com.example.protein;
 
+import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andremion.counterfab.CounterFab;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.protein.Common.Common;
 import com.example.protein.Databases.Database;
@@ -22,12 +22,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class FoodDetail extends AppCompatActivity {
 
     TextView food_name, food_price, food_description;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    FloatingActionButton btnCart;
+    CounterFab btnCart;
     ElegantNumberButton numberButton;
 
     String foodId="";
@@ -38,8 +41,20 @@ public class FoodDetail extends AppCompatActivity {
     Food currentFood;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext( CalligraphyContextWrapper.wrap( newBase ) );
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+
+        // Note: add this code before setContentView method
+        CalligraphyConfig.initDefault( new CalligraphyConfig.Builder()
+                .setDefaultFontPath( "fonts/headlock.otf" )
+                .setFontAttrId( R.attr.fontPath )
+                .build());
+
         setContentView( R.layout.activity_food_detail );
 
         // Firebase
@@ -48,7 +63,7 @@ public class FoodDetail extends AppCompatActivity {
 
         // Init view
         numberButton = (ElegantNumberButton)findViewById( R.id.number_button );
-        btnCart = (FloatingActionButton)findViewById( R.id.btnCart );
+        btnCart = (CounterFab) findViewById( R.id.btnCart );
 
         btnCart.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -65,6 +80,8 @@ public class FoodDetail extends AppCompatActivity {
                 Toast.makeText( FoodDetail.this, "Dodato u korpu!", Toast.LENGTH_SHORT ).show();
             }
         } );
+
+        btnCart.setCount( new Database( this ).getCountCart() );
 
         food_description = (TextView)findViewById( R.id.food_description );
         food_name = (TextView)findViewById( R.id.food_name );
@@ -101,7 +118,7 @@ public class FoodDetail extends AppCompatActivity {
 
                 collapsingToolbarLayout.setTitle( currentFood.getName() );
 
-                food_price.setText("RSD "+ currentFood.getPrice() );
+                food_price.setText(currentFood.getPrice() + " RSD" );
 
                 food_name.setText( currentFood.getName() );
 

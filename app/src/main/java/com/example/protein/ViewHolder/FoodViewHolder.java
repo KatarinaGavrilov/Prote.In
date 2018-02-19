@@ -14,8 +14,8 @@ import com.example.protein.R;
 
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView food_name;
-    public ImageView food_image;
+    public TextView food_name, food_price;
+    public ImageView food_image, quick_cart;
     private ItemClickListener itemClickListener;
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -27,6 +27,8 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         food_name = (TextView)itemView.findViewById( R.id.food_name );
         food_image = (ImageView)itemView.findViewById( R.id.food_image );
+        food_price = (TextView) itemView.findViewById( R.id.food_price );
+        quick_cart = (ImageView)itemView.findViewById( R.id.btn_quick_cart );
 
         itemView.setOnClickListener(this);
     }

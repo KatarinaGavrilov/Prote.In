@@ -6,7 +6,7 @@ package com.example.protein.Model;
 
 public class Order {
 
-    int ID;
+    private int ID;
     private String ProductId;
     private String ProductName;
     private String Quantity;
@@ -18,16 +18,7 @@ public class Order {
     }
 
     public Order(String productId, String productName, String quantity, String price, String discount, String image) {
-        ProductId = productId;
-        ProductName = productName;
-        Quantity = quantity;
-        Price = price;
-        Discount = discount;
-        Image = image;
-    }
 
-    public Order(int ID, String productId, String productName, String quantity, String price, String discount, String image) {
-        this.ID = ID;
         ProductId = productId;
         ProductName = productName;
         Quantity = quantity;
@@ -42,14 +33,6 @@ public class Order {
 
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    public String getImage() {
-        return Image;
-    }
-
-    public void setImage(String image) {
-        Image = image;
     }
 
     public String getProductId() {
@@ -90,5 +73,13 @@ public class Order {
 
     public void setDiscount(String discount) {
         Discount = discount;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
     }
 }

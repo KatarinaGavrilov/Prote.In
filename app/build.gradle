@@ -50,6 +50,12 @@ dependencies {
 
     compile 'com.github.d-max:spots-dialog:0.7@aar'
 
+    // Font
+    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+
+    // CounterFAB
+    compile 'com.github.andremion:counterfab:1.0.1'
+
     // compile 'com.github.jd-alexander:android-flat-button:v1.1'
 
 }

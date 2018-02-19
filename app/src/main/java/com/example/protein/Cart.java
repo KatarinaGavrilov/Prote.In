@@ -1,5 +1,6 @@
 package com.example.protein;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class Cart extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -45,8 +49,20 @@ public class Cart extends AppCompatActivity {
     CartAdapter adapter;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext( CalligraphyContextWrapper.wrap( newBase ) );
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+
+        // Note: add this code before setContentView method
+        CalligraphyConfig.initDefault( new CalligraphyConfig.Builder()
+            .setDefaultFontPath( "fonts/headlock.otf" )
+            .setFontAttrId( R.attr.fontPath )
+            .build());
+
         setContentView( R.layout.activity_cart );
 
         // Firebase
